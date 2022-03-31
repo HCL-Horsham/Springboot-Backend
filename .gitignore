@@ -3,6 +3,8 @@ HELP.md
 !target/*.xml
 target/
 !.mvn/wrapper/maven-wrapper.jar
+!**/target/Jacoco.exec
+!**/target/*.xml
 !**/src/main/**
 !**/src/test/**
 
