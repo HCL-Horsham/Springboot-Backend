@@ -124,11 +124,10 @@
 				    </goals>
 				</execution>
 				<execution>
-				    <id>jacoco-site</id>
-				    <phase>package</phase>
-				    <goals>
-					<goal>report</goal>
-				    </goals>
+					<id>jacoco-report</id>
+            				<goals>
+                				<goal>report</goal>
+            				</goals>
 				</execution>
 			    </executions>
 			</plugin>
