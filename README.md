@@ -1,5 +1,5 @@
 # FullstackEcommerceApplication
-## SpringBoot-Backend
+## SpringBoot-Backend  (Azure deployment version)
 ### 
 ### By: Anna Archut, Arnold Patten, Dajun Lin, Seho Chung & Xin Yi Lin
 
