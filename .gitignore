@@ -1,8 +1,10 @@
 HELP.md
 !target/Jacoco.exec
 !target/*.xml
+!target/*.war
 !.mvn/wrapper/maven-wrapper.jar
 !**/target/Jacoco.exec
+!**/target/*.war
 !**/target/*.xml
 !**/src/main/**
 !**/src/test/**
