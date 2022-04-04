@@ -1,0 +1,89 @@
+name: Backend CI CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./backend-springboot/A-spring-boot-ecommerce/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'microsoft'
+        cache: maven
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v2.1.4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+      
+    - name: Build with Maven
+      run: |
+        mvn -B package --file pom.xml
+        mkdir staging && cp target/*.war staging
+      
+      - name: Build artifacts
+        run: make build-windows
+      
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v2
+      with:
+        name: java-app
+        path: './target/*.war'
+        
+#   deploy-staging:
+#     if: github.event_name == 'pull_request' && github.event.action != 'closed'
+#     runs-on: windows-latest
+#     needs: build
+#     environment: 
+#       name: 'staging'
+#       url: $${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      
+#     steps:
+#     - name: Download artifact from build job
+#       uses: actions/download-artifact@v2
+#       with:
+#         name: java-app
+        
+#     - name: 'Deploy to Azure Web App'
+#       id: deploy-to-webapp
+#       uses: azure/webapps-deploy@v2
+#       with:
+#         app-name: 'horshambags-backend'
+#         slot-name: 'staging'
+#         publish-profile: ${{ secrets.AZURE_STAGING_PROFILE }}
+        
+  deploy-to-production:
+    if: github.event_name != 'pull_request'
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: java-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'horshambags-backend'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A0489B3EDB32419B90B8F96627874688 }}
+          package: '*.war'
