@@ -13,12 +13,25 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 	@Autowired
 	private CheckoutController checkoutController;
 
-	private Address address=new Address();
-	
 	@Test
-	public void testObject() {
-		address.setZipCode("12345");
-		 assertNotNull(checkoutController);
-		 assertTrue( address.getZipCode().equals("12345"));
+	public void testAddress() {
+		assertNotNull(checkoutController);
+		
+		Address address=new Address();	
+		
+		address.setZipCode("");
+		address.setCity("");
+		address.setCountry("");
+		address.setId((long)1);
+		address.setState("");
+		address.setStreet("");
+		
+		assertTrue( address.getId()>0);
+		assertTrue( address.getZipCode().equals(""));
+		assertTrue( address.getCity().equals(""));
+		assertTrue( address.getCountry().equals(""));
+		assertTrue( address.getState().equals(""));
+		assertTrue( address.getStreet().equals(""));
+		
 	}
 }
