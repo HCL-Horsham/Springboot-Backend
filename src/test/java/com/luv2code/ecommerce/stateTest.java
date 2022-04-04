@@ -182,6 +182,7 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 		address.setOrder(od);
 
 		ct.add(od);
+		assertTrue(od.getOrderItems() != null);
 		od.add(odit);
 		assertTrue(ct.getOrders() != null);
 		assertTrue(od.getOrderItems() != null);
