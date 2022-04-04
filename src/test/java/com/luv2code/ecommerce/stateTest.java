@@ -27,7 +27,7 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 	@Autowired
 	private CheckoutController checkoutController;
 
-	@Test
+		@Test
 	public void testCountryStateEntity() {
 		// Country Testing
 		Country c = new Country();
@@ -105,11 +105,13 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 		ct.setFirstName("");
 		ct.setId((long) 1);
 		ct.setLastName("");
+		ct.add(null);
 
 		assertTrue(ct.getEmail().equals(""));
 		assertTrue(ct.getFirstName().equals(""));
 		assertTrue(ct.getId() > 0);
 		assertTrue(ct.getLastName().equals(""));
+		assertTrue(ct.getOrders() != null);
 
 		// Address testing
 
@@ -129,7 +131,6 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 		assertTrue(address.getStreet().equals(""));
 
 		// Order testing
-
 		Order od = new Order();
 		od.setBillingAddress(address);
 		od.setCustomer(ct);
@@ -140,6 +141,7 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 		od.setStatus("");
 		od.setTotalPrice(BigDecimal.valueOf(1));
 		od.setTotalQuantity(0);
+		od.add(null);
 
 		assertTrue(od.getId() > 0);
 		assertTrue(od.getOrderTrackingNumber().equals(""));
@@ -148,6 +150,8 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 		assertTrue(od.getTotalQuantity() == 0);
 		assertTrue(od.getBillingAddress() != null);
 		assertTrue(od.getShippingAddress() != null);
+		assertTrue(od.getOrderItems() != null);
+		
 
 		// OrderItem Testing
 		OrderItem odit = new OrderItem();
@@ -173,15 +177,15 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 		assertTrue(odit.getProductId() > 0);
 		assertTrue(odit.getQuantity() > 0);
 		assertTrue(odit.getUnitPrice() == BigDecimal.valueOf(1));
-		
-		//Table-related Testing
+
+		// Related Testing
 		address.setOrder(od);
+
 		ct.add(od);
 		od.add(odit);
-		
-		assertTrue(ct.getOrders()!=null);
-		assertTrue(od.getOrderItems()!=null);
-		assertTrue(address.getOrder()!=null);
+		assertTrue(ct.getOrders() != null);
+		assertTrue(od.getOrderItems() != null);
+		assertTrue(address.getOrder() != null);
 
 	}
 }
