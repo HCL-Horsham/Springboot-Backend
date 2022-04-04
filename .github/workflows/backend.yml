@@ -73,7 +73,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'horshambags-backend'
+          app-name: 'hclhorshambags-backend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A0489B3EDB32419B90B8F96627874688 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_25C8FF19CF124C17A7CB3300E3ECC9AC }}
           package: '*.jar'
