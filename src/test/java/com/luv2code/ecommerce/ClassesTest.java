@@ -23,7 +23,7 @@ import com.luv2code.ecommerce.entity.Product;
 import com.luv2code.ecommerce.entity.ProductCategory;
 import com.luv2code.ecommerce.entity.State;
 
-public class stateTest  extends SpringBootEcommerceApplicationTests {
+public class ClassesTest  extends SpringBootEcommerceApplicationTests {
 	@Autowired
 	private CheckoutController checkoutController;
 
