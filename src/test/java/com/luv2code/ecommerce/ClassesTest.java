@@ -179,6 +179,13 @@ public class stateTest  extends SpringBootEcommerceApplicationTests {
 		assertTrue(odit.getUnitPrice() == BigDecimal.valueOf(1));
 
 		// Related Testing
+		Customer ctTmp=new Customer();
+		Order odTmp=new Order();
+		
+		ctTmp.add(odTmp);
+		assertTrue(odTmp.getOrderItems() != null);
+		assertTrue(ctTmp.getOrders() != null);
+		
 		address.setOrder(od);
 
 		ct.add(od);
