@@ -11,9 +11,5 @@ class SpringBootEcommerceApplicationTests {
 	void contextLoads() {
 	}
 	
-	// Test class added only to cover main() invocation not covered by application tests.
-	@Test
-   	void main() {
-      	SpringBootEcommerceApplication.main(new String[] {});
-   }
+	
 }
