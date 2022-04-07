@@ -1,5 +1,6 @@
 package com.luv2code.ecommerce.entity;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
@@ -10,11 +11,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.luv2code.ecommerce.SpringBootEcommerceApplicationTests;
+import com.luv2code.ecommerce.controller.CheckoutController;
 
 public class EntityTesting extends SpringBootEcommerceApplicationTests {
 
+	@Autowired
+	private CheckoutController checkoutController;
+	
 	@Test
 	public void testCountryStateEntity() {
 		// Country Testing
@@ -164,7 +170,15 @@ public class EntityTesting extends SpringBootEcommerceApplicationTests {
 		assertTrue(odit.getUnitPrice() == BigDecimal.valueOf(1));
 
 		// Related Testing
+		assertNotNull(checkoutController);
 		address.setOrder(od);
+
+		Customer ctTmp = new Customer();
+		Order odTmp = new Order();
+
+		ctTmp.add(odTmp);
+		assertTrue(odTmp.getOrderItems() != null);
+		assertTrue(ctTmp.getOrders() != null);
 
 		ct.add(od);
 		assertTrue(od.getOrderItems() != null);
