@@ -166,13 +166,6 @@ public class EntityTesting extends SpringBootEcommerceApplicationTests {
 		// Related Testing
 		address.setOrder(od);
 
-		Customer ctTmp = new Customer();
-		Order odTmp = new Order();
-
-		ctTmp.add(odTmp);
-		assertTrue(odTmp.getOrderItems() != null);
-		assertTrue(ctTmp.getOrders() != null);
-
 		ct.add(od);
 		assertTrue(od.getOrderItems() != null);
 
