@@ -20,7 +20,7 @@ public class EntityTesting extends SpringBootEcommerceApplicationTests {
 
 	@Autowired
 	private CheckoutController checkoutController;
-	
+
 	@Test
 	public void testCountryStateEntity() {
 		// Country Testing
@@ -173,8 +173,12 @@ public class EntityTesting extends SpringBootEcommerceApplicationTests {
 		assertNotNull(checkoutController);
 		address.setOrder(od);
 
+
 		Customer ctTmp = new Customer();
+
 		Order odTmp = new Order();
+
+		ctTmp.add(null);
 
 		ctTmp.add(odTmp);
 		assertTrue(odTmp.getOrderItems() != null);
