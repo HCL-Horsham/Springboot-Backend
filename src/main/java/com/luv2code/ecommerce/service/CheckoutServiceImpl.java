@@ -1,32 +1,36 @@
 package com.luv2code.ecommerce.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.luv2code.ecommerce.dao.CustomerRepository;
+import com.luv2code.ecommerce.dao.ProductRepository;
 import com.luv2code.ecommerce.dto.PaymentInfo;
 import com.luv2code.ecommerce.dto.Purchase;
 import com.luv2code.ecommerce.dto.PurchaseResponse;
 import com.luv2code.ecommerce.entity.Customer;
 import com.luv2code.ecommerce.entity.Order;
 import com.luv2code.ecommerce.entity.OrderItem;
+import com.luv2code.ecommerce.entity.Product;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 
     private CustomerRepository customerRepository;
+    private ProductRepository productRepository;
 
     public CheckoutServiceImpl(CustomerRepository customerRepository, @Value("${stripe.key.secret}") String secretKey) {
         this.customerRepository = customerRepository;
@@ -48,6 +52,14 @@ public class CheckoutServiceImpl implements CheckoutService {
         // populate order with orderItems
         Set<OrderItem> orderItems = purchase.getOrderItems();
         orderItems.forEach(item -> order.add(item));
+        
+        // decrement unitsInStock
+        for(OrderItem orders:orderItems) {
+        	Optional<Product> orderFromDB = productRepository.findById(orders.getProductId());
+        	int decrementAmount = orderFromDB.get().getUnitsInStock() - orders.getQuantity();
+        	orderFromDB.get().setUnitsInStock(decrementAmount);
+        	productRepository.save(orderFromDB.get());
+        }
 
         // populate order with billingAddress and shippingAddress
         order.setBillingAddress(purchase.getBillingAddress());
