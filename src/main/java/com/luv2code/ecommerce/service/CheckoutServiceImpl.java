@@ -56,9 +56,10 @@ public class CheckoutServiceImpl implements CheckoutService {
         // decrement unitsInStock
         for(OrderItem orders:orderItems) {
         	Optional<Product> orderFromDB = productRepository.findById(orders.getProductId());
-        	int decrementAmount = orderFromDB.get().getUnitsInStock() - orders.getQuantity();
-        	orderFromDB.get().setUnitsInStock(decrementAmount);
-        	productRepository.save(orderFromDB.get());
+        	if(orderFromDB.isPresent()) {
+	        	int decrementAmount = orderFromDB.get().getUnitsInStock() - orders.getQuantity();
+	        	orderFromDB.get().setUnitsInStock(decrementAmount);
+	        	productRepository.save(orderFromDB.get());}
         }
 
         // populate order with billingAddress and shippingAddress
