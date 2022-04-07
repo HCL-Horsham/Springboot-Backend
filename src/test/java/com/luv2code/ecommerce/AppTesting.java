@@ -1,5 +1,5 @@
 package com.luv2code.ecommerce;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.luv2code.ecommerce.SpringBootEcommerceApplicationTests;
 
