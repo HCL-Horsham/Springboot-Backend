@@ -21,8 +21,8 @@
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.coverage.exclusions>**/com/luv2code/ecommerce/service/CheckoutServiceImpl.*,
 			**/com/luv2code/ecommerce/controller/*,
-			**/com/luv2code/ecommerce/controller/Customer.*,
-			**/com/luv2code/ecommerce/controller/Order.*
+			**/com/luv2code/ecommerce/entity/Customer.*,
+			**/com/luv2code/ecommerce/entity/Order.*
 		</sonar.coverage.exclusions>
 	</properties>
 
