@@ -19,6 +19,11 @@
 		<java.version>1.8</java.version>
 		<sonar.organization>hcl-horsham</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.coverage.exclusions>**/com/luv2code/ecommerce/service/CheckoutServiceImpl.*,
+			**/com/luv2code/ecommerce/controller/*,
+			**/com/luv2code/ecommerce/controller/Customer.*,
+			**/com/luv2code/ecommerce/controller/Order.*
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
