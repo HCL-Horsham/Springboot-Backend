@@ -32,8 +32,9 @@ public class CheckoutServiceImpl implements CheckoutService {
     private CustomerRepository customerRepository;
     private ProductRepository productRepository;
 
-    public CheckoutServiceImpl(CustomerRepository customerRepository, @Value("${stripe.key.secret}") String secretKey) {
+    public CheckoutServiceImpl(CustomerRepository customerRepository, ProductRepository productRepository, @Value("${stripe.key.secret}") String secretKey) {
         this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
         
         Stripe.apiKey = secretKey;
     }
@@ -54,13 +55,13 @@ public class CheckoutServiceImpl implements CheckoutService {
         orderItems.forEach(item -> order.add(item));
         
         // decrement unitsInStock
-//         for(OrderItem orders:orderItems) {
-//         	Optional<Product> orderFromDB = productRepository.findById(orders.getProductId());
-//         	if(orderFromDB.isPresent()) {
-// 	        	int decrementAmount = orderFromDB.get().getUnitsInStock() - orders.getQuantity();
-// 	        	orderFromDB.get().setUnitsInStock(decrementAmount);
-// 	        	productRepository.save(orderFromDB.get());}
-//         }
+        for(OrderItem orders:orderItems) {
+        	Optional<Product> orderFromDB = productRepository.findById(orders.getProductId());
+        	if(orderFromDB.isPresent()) {
+	        	int decrementAmount = orderFromDB.get().getUnitsInStock() - orders.getQuantity();
+	        	orderFromDB.get().setUnitsInStock(decrementAmount);
+	        	productRepository.save(orderFromDB.get());}
+        }
 
         // populate order with billingAddress and shippingAddress
         order.setBillingAddress(purchase.getBillingAddress());
@@ -111,12 +112,3 @@ public class CheckoutServiceImpl implements CheckoutService {
 		return PaymentIntent.create(params);
 	}
 }
-
-
-
-
-
-
-
-
-
